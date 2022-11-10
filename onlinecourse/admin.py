@@ -5,7 +5,7 @@ from .models import Course, Lesson, Instructor, Learner
 # <HINT> Register QuestionInline and ChoiceInline classes here
 
 
-class LessonInline(admin.StackedInline):
+class LessonInline(пе):
     model = Lesson
     extra = 5
 
@@ -20,6 +20,14 @@ class CourseAdmin(admin.ModelAdmin):
 
 class LessonAdmin(admin.ModelAdmin):
     list_display = ['title']
+
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ['question_text', 'grade']
+
+
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ['choice_text', 'is_correct']
 
 
 # <HINT> Register Question and Choice models here
