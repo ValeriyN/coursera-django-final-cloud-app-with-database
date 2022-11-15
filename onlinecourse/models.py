@@ -113,7 +113,7 @@ class Question(models.Model):
 
     def __str__(self):
         return "Question: " + self.question_text + "," + \
-                "Grade: " + self.grade
+                "Grade: " + str(self.grade)
 
 
     # <HINT> A sample model method to calculate if learner get the score of the question
