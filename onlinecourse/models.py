@@ -145,3 +145,8 @@ class Choice(models.Model):
 class Submission(models.Model):
    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
 #    Other fields and methods you would like to design
+
+
+class OnlinecourseSubmissionChoices(models.Model):
+   submission_id = models.ForeignKey(Submission, on_delete=models.CASCADE)
+   choice_id = models.ForeignKey(Choice, on_delete=models.CASCADE)

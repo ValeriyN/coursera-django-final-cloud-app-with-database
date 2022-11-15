@@ -113,12 +113,13 @@ def enroll(request, course_id):
 def submit(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     user = request.user
-    enrollment = Enrollment.objects.filter(user=user, course=course)
+    enrollment = Enrollment.objects.get(user=user, course=course)
     choices = extract_answers(request)
 
     submission = Submission.objects.create(enrollment=enrollment)
     for choice in choices:
-        Choice.objects.create(question= ,choice_text= ,is_correct=)
+        OnlinecourseSubmissionChoices.objects.create(submission_id=submission.id, choice_id=choice.id)
+
     return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(submission.id,)))
 
 
