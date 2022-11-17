@@ -148,5 +148,5 @@ class Submission(models.Model):
 
 
 class OnlinecourseSubmissionChoices(models.Model):
-   submission_id = models.ForeignKey(Submission, on_delete=models.CASCADE)
-   choice_id = models.ForeignKey(Choice, on_delete=models.CASCADE)
+   submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+   choice = models.ForeignKey(Choice, on_delete=models.CASCADE)

@@ -77,7 +77,7 @@
             <button class="btn btn-primary btn-block" data-toggle="collapse" data-target="#questionform">Start exam</button>
 
 
-            <form id="questionform" class="collapse" action="point to a submit view" method="post">
+            <form id="questionform" class="collapse" action= "{% url 'onlinecourse:submit' course.pk%}" method="post">
                         {% for question in course.question_set.all %}
                         <div class="card mt-1">
                             <div class="card-header"><h5>{{ question.question_text}}</h5></div>
