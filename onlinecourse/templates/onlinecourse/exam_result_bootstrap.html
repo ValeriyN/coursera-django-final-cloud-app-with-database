@@ -37,6 +37,9 @@
 
 <div class="container-fluid">
     <h1>{{course.name}}</h1>
+    {% for selected_id in selected_ids %}
+        <div>{{selected_id.choice_id}}</div>
+    {% endfor %}
     {% if grade > 80 %}
     <div class="alert alert-success">
        <!--HINT Display passed info -->
