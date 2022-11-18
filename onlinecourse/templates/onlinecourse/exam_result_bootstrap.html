@@ -39,8 +39,8 @@
     <h1>{{course.name}}</h1> 
     <h1>Qty of correct {{correct_choices_qty}}</h1> 
     <h1>Total course grade: {{course_total_grade}}</h1>
-    {% for selected_id in selected_ids %}
-        <div>{{selected_id.choice_id}}</div>
+    {% for submitted_id in submitted_ids %}
+        <div>{{submitted_id.choice_id}}</div>
     {% endfor %}
     {% if grade > 80 %}
     <div class="alert alert-success">
@@ -62,8 +62,8 @@
                 <div class="form-group">
                     {% for choice in question.choice_set.all %}
                     <div class="form-check {%if choice.is_correct%}text-success{% endif %}" >
-                        {%if choice.is_correct%}Correct answer: 
-                        {% elif choice.is_correct AND choice.id not in selected_ids) %}Not selected: 
+                        {%if choice.is_correct%}
+                            Correct answer:
                         {% endif %}
                         {{ choice.choice_text }}
                     </div>
