@@ -36,7 +36,9 @@
 </nav>
 
 <div class="container-fluid">
-    <h1>{{course.name}}</h1>
+    <h1>{{course.name}}</h1> 
+    <h1>Qty of correct {{correct_choices_qty}}</h1> 
+    <h1>Total course grade: {{course_total_grade}}</h1>
     {% for selected_id in selected_ids %}
         <div>{{selected_id.choice_id}}</div>
     {% endfor %}
@@ -53,6 +55,22 @@
         <div class="card-columns-vertical mt-1">
         <h5 class="">Exam results</h5>
             <!--HINT Display exam results-->
+            {% for question in course.question_set.all %}
+            <div class="card mt-1">
+                <div class="card-header"><h5>{{ question.question_text}} (grade: {{question.grade}})</h5></div>
+                {% csrf_token %}
+                <div class="form-group">
+                    {% for choice in question.choice_set.all %}
+                    <div class="form-check {%if choice.is_correct%}text-success{% endif %}" >
+                        {%if choice.is_correct%}Correct answer: 
+                        {% elif choice.is_correct AND choice.id not in selected_ids) %}Not selected: 
+                        {% endif %}
+                        {{ choice.choice_text }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
         </div>
     </div>
 </body>

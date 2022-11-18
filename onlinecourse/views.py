@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 # <HINT> Import any new Models here
-from .models import Course, Enrollment, Question, Choice, Submission, OnlinecourseSubmissionChoices
+from .models import Course, Enrollment, Question, Choice, Submission, SubmissionChoices
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
@@ -118,7 +118,7 @@ def submit(request, course_id):
 
     submission = Submission.objects.create(enrollment=enrollment)
     for choice_id in choice_ids:
-        OnlinecourseSubmissionChoices.objects.create(submission=submission, choice=Choice.objects.get(id=choice_id))  
+       SubmissionChoices.objects.create(submission=submission, choice=Choice.objects.get(id=choice_id))  
 
     return HttpResponseRedirect(reverse(viewname='onlinecourse:show_exam_result', args=(course.id, submission.id,)))
 
@@ -145,10 +145,16 @@ def show_exam_result(request, course_id, submission_id):
     context = {}
     course = get_object_or_404(Course, pk=course_id)
     submission = get_object_or_404(Submission, pk=submission_id)
-    selected_ids = submission.onlinecoursesubmissionchoices_set.all()
+    selected_ids = submission.submissionchoices_set.all().values('choice_id')
+    correct_choices_qty = Choice.objects.all().filter(is_correct=True, id__in=selected_ids).count()
+    course_total_grade = course.total_grade
     context['course'] = course
     context['grade'] = 10
-    context['selected_ids'] = selected_ids
+    context['selected_ids'] = selected_ids 
+    context['correct_choices_qty'] = correct_choices_qty 
+    context['course_total_grade'] = course_total_grade 
+    
+    
     # Question.is_get_score(self, selected_ids)
     return render(request, 'onlinecourse/exam_result_bootstrap.html', context)
 

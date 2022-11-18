@@ -2,6 +2,7 @@ import sys
 from django.utils.timezone import now
 try:
     from django.db import models
+    from django.db.models import Sum
 except Exception:
     print("There was an error loading django modules. Do you have django installed?")
     sys.exit()
@@ -63,6 +64,9 @@ class Course(models.Model):
     total_enrollment = models.IntegerField(default=0)
     is_enrolled = False
 
+    def total_grade(self):
+       return int(self.question_set.aggregate(Sum('grade'))['grade__sum'])
+
     def __str__(self):
         return "Name: " + self.name + "," + \
                "Description: " + self.description
@@ -116,7 +120,7 @@ class Question(models.Model):
                 "Grade: " + str(self.grade)
 
 
-    # <HINT> A sample model method to calculate if learner get the score of the question
+    # <HINT> A sample model method to calculate if learner get the score of the question 
     def is_get_score(self, selected_ids):
        all_answers = self.choice_set.filter(is_correct=True).count()
        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
@@ -147,6 +151,6 @@ class Submission(models.Model):
 #    Other fields and methods you would like to design
 
 
-class OnlinecourseSubmissionChoices(models.Model):
+class SubmissionChoices(models.Model):
    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
