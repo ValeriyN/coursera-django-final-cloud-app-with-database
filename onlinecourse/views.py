@@ -153,7 +153,7 @@ def show_exam_result(request, course_id, submission_id):
     context['grade'] = 10
     context['submitted_ids'] = submitted_ids 
     context['correct_choices_qty'] = correct_choices_qty 
-    context['course_total_grade'] = course_total_grad04e 
+    context['course_total_grade'] = course_total_grade 
     
     
     # Question.is_get_score(self, selected_ids)

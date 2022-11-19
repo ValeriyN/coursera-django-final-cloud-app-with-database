@@ -151,7 +151,11 @@ class Submission(models.Model):
 #    Other fields and methods you would like to design
 
     def submitted_ids(self):
-        return self.submissionchoices_set.all().values('choice_id')
+        submitted_ids = []
+        for choice in self.submissionchoices_set.all().values('choice_id'):
+            submitted_ids.append(choice['choice_id'])
+        
+        return submitted_ids
 
 class SubmissionChoices(models.Model):
    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
