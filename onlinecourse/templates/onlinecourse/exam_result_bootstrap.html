@@ -37,21 +37,17 @@
 
 <div class="container-fluid">
     <h1>{{course.name}}</h1> 
-    <h1>Qty of correct {{correct_choices_qty}}</h1> 
-    <h1>Total course grade: {{course_total_grade}}</h1>
-    {% for submitted_id in submitted_ids %}
-        <div>{{submitted_id}}</div>
-    {% endfor %}
-    {% if grade > 80 %}
+    {% if grade == course.total_grade %}
     <div class="alert alert-success">
        <!--HINT Display passed info -->
+       <strong>Congratulation, {{user.username}}!</strong> You have passed exam and completed the course with score {{grade}}/{{course.total_grade}}
     </div>
-        {% else %}
-        <div class="alert alert-danger">
-            <!--HINT Display failed info -->
-        </div>
-        <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
-        {% endif %}
+    {% else %}
+    <div class="alert alert-danger">
+        <strong>Failed</strong> Sorry, {{user.username}}! You have failed exam with score {{grade}}/{{course.total_grade}}
+    </div>
+    <a class="btn btn-link text-danger" href="{% url 'onlinecourse:course_details' course.id %}">Re-test</a>
+    {% endif %}
         <div class="card-columns-vertical mt-1">
         <h5 class="">Exam results</h5>
             <!--HINT Display exam results-->

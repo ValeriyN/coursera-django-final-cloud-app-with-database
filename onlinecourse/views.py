@@ -146,14 +146,18 @@ def show_exam_result(request, course_id, submission_id):
     course = get_object_or_404(Course, pk=course_id)
     submission = get_object_or_404(Submission, pk=submission_id)
     submitted_ids = submission.submitted_ids()
+    grade = 0
 
-    correct_choices_qty = Choice.objects.all().filter(is_correct=True, id__in=submitted_ids).count()
+    for question in course.question_set.all():
+        if question.is_get_score(submitted_ids):
+            grade += question.grade
+
     course_total_grade = course.total_grade
     context['course'] = course
     context['grade'] = 10
     context['submitted_ids'] = submitted_ids 
-    context['correct_choices_qty'] = correct_choices_qty 
-    context['course_total_grade'] = course_total_grade 
+    context['grade'] = grade
+
     
     
     # Question.is_get_score(self, selected_ids)
